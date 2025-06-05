@@ -25,14 +25,14 @@ services:
       - "${CONFIG_PATH}:/app/config"
       - "${CACHE_PATH}:/app/cache"
       - "${LOGS_PATH}:/app/logs"
-      # Mount local folders to snapshot
-      - "${SOURCE_PATH}:/data:ro"
-      # Mount repository location
-      - "${BACKUP_PATH}:/repository"
-      # Mount path for browsing mounted snaphots
-      - "${TEMP_PATH}:/tmp:shared"
-      # Restore path
-      - "${RESTORE_PATH}:/restore"
       # Scripts path
       - "${SCRIPTS_PATH}:/scripts"
+      # Mount path for browsing mounted snaphots
+      - "${TEMP_PATH}:/tmp:shared"
+      # Mount repository location
+      - "${BACKUP_PATH}:/repository"
+      # Restore path
+      - "${RESTORE_PATH}:/restore"
+      # Mount local folders to snapshot
+      - "${SOURCE_PATH}:/data:ro"
     restart: "unless-stopped"
