@@ -1,0 +1,33 @@
+version: "3.8"
+services:
+  picsur_app:
+    image: "ghcr.io/caramelfur/picsur:0.5.6"
+    container_name: "picsur_app"
+    depends_on:
+      - "picsur_db"
+    environment:
+      PICSUR_DB_HOST: picsur_db
+      PICSUR_DB_DATABASE: ${POSTGRES_DB}
+      PICSUR_DB_USERNAME: ${POSTGRES_USER}
+      PICSUR_DB_PASSWORD: ${POSTGRES_PASSWORD}
+      PICSUR_ADMIN_PASSWORD: ${PICSUR_ADMIN_PASSWORD}
+      PICSUR_JWT_SECRET: ${PICSUR_JWT_SECRET}
+      PICSUR_JWT_EXPIRY: ${PICSUR_JWT_EXPIRY}
+      PICSUR_MAX_FILE_SIZE: ${PICSUR_MAX_FILE_SIZE}
+      PICSUR_VERBOSE: "${PICSUR_VERBOSE}"
+    ports:
+      - "${APP_PORT}:8080"
+    restart: "unless-stopped"
+
+  picsur_db:
+    image: "postgres:17.5"
+    container_name: "picsur_db"
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - "${DB_CONFIG}:/var/lib/postgresql/data"
+    ports:
+      - "${DB_PORT}:5432"
+    restart: "unless-stopped"

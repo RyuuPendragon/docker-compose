@@ -1,0 +1,14 @@
+version: "3.8"
+services:
+  adguardhome-sync:
+    image: "linuxserver/adguardhome-sync:0.7.6"
+    container_name: "adguardhome-sync"
+    environment:
+      - "PUID=${PUID}"
+      - "PGID=${PGID}"
+      - "TZ=${TZ}"
+    volumes:
+      - "${CONFIG_PATH}:/config"
+    ports:
+      - "${PORT}:8080"
+    restart: "unless-stopped"

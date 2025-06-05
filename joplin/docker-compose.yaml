@@ -1,0 +1,32 @@
+version: "3.8"
+services:
+  joplin-server:
+    image: "joplin/server:3.3.9-beta"
+    container_name: "joplin-server"
+    depends_on:
+      - "joplin-db"
+    environment:
+      - "APP_PORT=${APP_PORT}"
+      - "APP_BASE_URL=${APP_BASE_URL}"
+      - "DB_CLIENT=pg"
+      - "POSTGRES_DATABASE=${POSTGRES_DATABASE}"
+      - "POSTGRES_USER=${POSTGRES_USER}"
+      - "POSTGRES_PASSWORD=${POSTGRES_PASSWORD}"
+      - "POSTGRES_HOST=joplin-db"
+      - "POSTGRES_PORT=5432"
+    ports:
+      - "${APP_PORT}:22300"
+    restart: "unless-stopped"
+
+  joplin-db:
+    image: "postgres:17.5"
+    container_name: "joplin-db"
+    environment:
+      - "POSTGRES_DB=${POSTGRES_DATABASE}"
+      - "POSTGRES_USER=${POSTGRES_USER}"
+      - "POSTGRES_PASSWORD=${POSTGRES_PASSWORD}"
+    volumes:
+      - "${DB_PATH}:/var/lib/postgresql/data"
+    ports:
+      - "${DB_PORT}:5432"
+    restart: "unless-stopped"

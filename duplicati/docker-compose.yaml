@@ -1,0 +1,19 @@
+version: "3.8"
+services:
+  duplicati:
+    image: "linuxserver/duplicati:2.1.0"
+    container_name: "duplicati"
+    environment:
+      - "PUID=${PUID}"
+      - "PGID=${PGID}"
+      - "TZ=${TZ}"
+    volumes:
+      - "${CONFIG_PATH}:/config"
+      - "${SOURCE_PATH}:/source"
+      - "${BACKUP_PATH}:/backups"
+      - "${SCRIPTS_PATH}:/scripts"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "/usr/bin/docker:/usr/bin/docker"
+    ports:
+      - "${PORT}:8200"
+    restart: "unless-stopped"

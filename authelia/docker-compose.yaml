@@ -1,0 +1,12 @@
+version: "3.8"  
+services:
+  authelia:
+    image: "authelia/authelia:4.39.4"
+    container_name: "authelia"
+    environment:
+      - "TZ=${TZ}"
+    volumes:
+      - "${CONFIG_PATH}:/config"
+    ports:
+      - "${PORT}:9091"
+    restart: "unless-stopped"
