@@ -2,7 +2,7 @@ version: "3.8"
 services:
   kopia:
     image: "kopia/kopia:0.20.1"
-    container_name: "kopia-${CONTAINER_NAME}"
+    container_name: "${CONTAINER_NAME}"
     hostname: "${HOSTNAME}"
     ports:
       - "${PORT}:51515"
