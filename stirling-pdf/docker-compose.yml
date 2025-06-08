@@ -10,9 +10,9 @@ services:
     ports:
       - "${PORT}:8080"
     volumes:
-      - "${TRAINIG_DATA}:/usr/share/tessdata" #Required for extra OCR languages
-      - "${CONFIG_PATH}:/configs"
-      - "${CUSTOM_FILES}:/customFiles/"
-      - "${LOGS}:/logs/"
-      - "${PIPELINE}:/pipeline/"
+      - "${APPDATA_DATA}/stirling-pdf/training_data:/usr/share/tessdata" #Required for extra OCR languages
+      - "${APPDATA_DATA}/stirling-pdf/config:/configs"
+      - "${APPDATA_DATA}/stirling-pdf/custom_files:/customFiles/"
+      - "${APPDATA_DATA}/stirling-pdf/logs:/logs/"
+      - "${APPDATA_DATA}/stirling-pdf/pipeline:/pipeline/"
     restart: "unless-stopped"
