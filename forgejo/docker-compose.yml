@@ -1,18 +1,17 @@
 version: "3.8"
 services:
   forgejo_db:
-    image: "linuxserver/mariadb:11.4.5"
+    image: "mariadb:11.7.2"
     container_name: "forgejo_db"
+    command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW --innodb-file-per-table=1 --skip-innodb-read-only-compressed
     environment:
-      - "PUID=${PUID}"
-      - "PGID=${PGID}"
       - "TZ=${TZ}"
       - "MYSQL_DATABASE=${MYSQL_DATABASE}"
       - "MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}"
       - "MYSQL_USER=${MYSQL_USER}"
       - "MYSQL_PASSWORD=${MYSQL_PASSWORD}"
     volumes:
-      - "${DB_PATH}:/config"
+      - "${DB_PATH}:/var/lib/mysql"
     ports:
       - "${DB_PORT}:3306"
     restart: "unless-stopped"
@@ -32,6 +31,8 @@ services:
       - "FORGEJO__database__PASSWD=${MYSQL_PASSWORD}"
     volumes:
       - "${SERVER_PATH}:/data"
+      - "/home/ubuntu/appdata/forgejo/etc-gitea:/etc/gitea"
+      - "/home/ubuntu/appdata/forgejo/var-lib-gitea:/var/lib/gitea"
       - "/etc/timezone:/etc/timezone:ro"
       - "/etc/localtime:/etc/localtime:ro"
     ports:
