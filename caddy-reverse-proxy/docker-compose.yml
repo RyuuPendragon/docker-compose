@@ -6,11 +6,11 @@ services:
     cap_add:
       - NET_ADMIN
     volumes:
-      - "${CADDYFILE_PATH}:/etc/caddy/Caddyfile"
-      - "${CONF_PATH}:/config"
-      - "${DATA_PATH}:/data"
-      - "${LOG_PATH}:/var/log/caddy"
-      - "${SITE_PATH}:/srv"
+      - "${APPDATA_PATH}/caddy-reverse-proxy/Caddyfile:/etc/caddy/Caddyfile"
+      - "${APPDATA_PATH}/caddy-reverse-proxy/config:/config"
+      - "${APPDATA_PATH}/caddy-reverse-proxy/data:/data"
+      - "${APPDATA_PATH}/caddy-reverse-proxy/log:/var/log/caddy"
+      - "${APPDATA_PATH}/caddy-reverse-proxy/srv:/srv"
     ports:
       - "${HTTP}:80"
       - "${HTTPS}:443"
