@@ -24,7 +24,7 @@ services:
       - "DEBUG=${DEBUG}"
       - "SITE_LOGO_URL=${SITE_LOGO_URL}"
     volumes:
-      - ${CONFIG_PATH}:/config
+      - ${APPDATA_PATH}/healthchecks/config:/config
     ports:
       - "${PORT}:8000"
     restart: "unless-stopped"
