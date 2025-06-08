@@ -11,7 +11,7 @@ services:
       - "MYSQL_USER=${MYSQL_USER}"
       - "MYSQL_PASSWORD=${MYSQL_PASSWORD}"
     volumes:
-      - "${DB_PATH}:/var/lib/mysql"
+      - "${APPDATA_PATH}/forgejo/db:/var/lib/mysql"
     ports:
       - "${DB_PORT}:3306"
     restart: "unless-stopped"
@@ -30,9 +30,9 @@ services:
       - "FORGEJO__database__USER=${MYSQL_USER}"
       - "FORGEJO__database__PASSWD=${MYSQL_PASSWORD}"
     volumes:
-      - "${SERVER_PATH}:/data"
-      - "/home/ubuntu/appdata/forgejo/etc-gitea:/etc/gitea"
-      - "/home/ubuntu/appdata/forgejo/var-lib-gitea:/var/lib/gitea"
+      - "${APPDATA_PATH}/forgejo/data:/data"
+      - "${APPDATA_PATH}/forgejo/etc-gitea:/etc/gitea"
+      - "${APPDATA_PATH}/forgejo/var-lib-gitea:/var/lib/gitea"
       - "/etc/timezone:/etc/timezone:ro"
       - "/etc/localtime:/etc/localtime:ro"
     ports:
