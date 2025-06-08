@@ -1,0 +1,13 @@
+version: "3.8"
+services:
+  syncyomi:
+    container_name: "syncyomi"
+    image: "ghcr.io/syncyomi/syncyomi:v1.1.4"
+    environment:
+      - "TZ=${TZ}"
+    volumes:
+      - "${APPDATA_PATH}/syncyomi/config:/config"
+      - "${APPDATA_PATH}/syncyomi/log:/log"
+    ports:
+      - "${PORT}:8282"
+    restart: "unless-stopped"
