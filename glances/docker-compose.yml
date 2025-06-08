@@ -3,7 +3,7 @@ services:
   glances:
     image: "nicolargo/glances:4.3.0.8"
     container_name: "glances"
-    hostname: "Rayquaza"
+    hostname: "${HOSTNAME}"
     pid: "host"
     environment:
       - "GLANCES_OPT=-w"
