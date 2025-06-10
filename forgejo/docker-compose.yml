@@ -10,6 +10,12 @@ services:
       - "MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}"
       - "MYSQL_USER=${MYSQL_USER}"
       - "MYSQL_PASSWORD=${MYSQL_PASSWORD}"
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      start_period: 10s
+      interval: 10s
+      timeout: 5s
+      retries: 3
     volumes:
       - "${APPDATA_PATH}/forgejo/db:/var/lib/mysql"
     ports:
@@ -20,7 +26,8 @@ services:
     image: "codeberg.org/forgejo/forgejo:11.0.1-rootless"
     container_name: "forgejo_server"
     depends_on:
-      - "forgejo_db"
+      forgejo_db:
+        condition: service_healthy
     environment:
       - "USER_UID=${PUID}"
       - "USER_GID=${PGID}"
