@@ -5,7 +5,7 @@ services:
     container_name: "homeassistant"
     network_mode: "host"
     volumes:
-      - "${CONFIG_PATH}:/config"
+      - "${APPDATA_PATH}/homeassistant/config:/config"
       - "/etc/localtime:/etc/localtime:ro"
       - "/run/dbus:/run/dbus:ro"
     restart: "unless-stopped"
