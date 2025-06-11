@@ -4,7 +4,7 @@ services:
     image: "louislam/uptime-kuma:1.23.16"
     container_name: "uptime-kuma"
     volumes:
-      - "${CONFIG_PATH}:/app/data"
+      - "${APPDATA_PATH}/uptime-kuma/config:/app/data"
     ports:
       - "${PORT}:3001"
     restart: "unless-stopped"
