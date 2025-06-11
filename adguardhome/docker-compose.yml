@@ -4,8 +4,8 @@ services:
     image: "adguard/adguardhome:v0.107.62"
     container_name: "adguardhome"
     volumes:
-      - "${WORK_PATH}:/opt/adguardhome/work"
-      - "${CONF_PATH}:/opt/adguardhome/conf"
+      - "${APPDATA_PATH}/adguardhome/work:/opt/adguardhome/work"
+      - "${APPDATA_PATH}/adguardhome/conf:/opt/adguardhome/conf"
     ports:
       - "${DNS_PORT}:53/tcp"
       - "${DNS_PORT}:53/udp"
