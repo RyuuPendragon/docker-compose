@@ -6,7 +6,7 @@ services:
     cap_add:
       - NET_ADMIN
     volumes:
-      - "${APPDATA_PATH}/caddy-reverse-proxy/Caddyfile:/etc/caddy/Caddyfile"
+      - "${APPDATA_PATH}/caddy-reverse-proxy/caddy:/etc/caddy"
       - "${APPDATA_PATH}/caddy-reverse-proxy/config:/config"
       - "${APPDATA_PATH}/caddy-reverse-proxy/data:/data"
       - "${APPDATA_PATH}/caddy-reverse-proxy/log:/var/log/caddy"
