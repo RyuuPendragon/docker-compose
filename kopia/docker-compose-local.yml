@@ -26,8 +26,10 @@ services:
       - "./scripts:/scripts"
       # Mount path for browsing mounted snaphots
       - "./tmp:/tmp:shared"
+      # Mount repository location
+      - "${BACKUP_PATH}:/repository"
       # Restore path
-      - "./restore:/restore"
+      - "${RESTORE_PATH}:/restore"
       # Mount local folders to snapshot
       - "${SOURCE_PATH}:/data:ro"
     ports:
