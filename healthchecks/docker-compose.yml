@@ -23,8 +23,10 @@ services:
       - "REGISTRATION_OPEN=${REGISTRATION_OPEN}"
       - "DEBUG=${DEBUG}"
       - "SITE_LOGO_URL=${SITE_LOGO_URL}"
+      - "PING_EMAIL_DOMAIN=${PING_EMAIL_DOMAIN}"
     volumes:
       - ${APPDATA_PATH}/healthchecks/config:/config
     ports:
       - "${PORT}:8000"
+      - "${SMTP_PORT}:2525"
     restart: "unless-stopped"
