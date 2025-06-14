@@ -24,6 +24,8 @@ services:
       - "DEBUG=${DEBUG}"
       - "SITE_LOGO_URL=${SITE_LOGO_URL}"
       - "PING_EMAIL_DOMAIN=${PING_EMAIL_DOMAIN}"
+      - "DISCORD_CLIENT_ID=${DISCORD_CLIENT_ID}"
+      - "DISCORD_CLIENT_SECRET=${DISCORD_CLIENT_SECRET}"
     volumes:
       - ${APPDATA_PATH}/healthchecks/config:/config
     ports:
