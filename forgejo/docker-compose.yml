@@ -38,8 +38,8 @@ services:
       - "FORGEJO__database__PASSWD=${MYSQL_PASSWORD}"
     volumes:
       - "${APPDATA_PATH}/forgejo/data:/data"
-      - "${APPDATA_PATH}/forgejo/etc-gitea:/etc/gitea"
-      - "${APPDATA_PATH}/forgejo/var-lib-gitea:/var/lib/gitea"
+      - "${APPDATA_PATH}/forgejo/etc_gitea:/etc/gitea"
+      - "${APPDATA_PATH}/forgejo/var_lib_gitea:/var/lib/gitea"
       - "/etc/timezone:/etc/timezone:ro"
       - "/etc/localtime:/etc/localtime:ro"
     ports:
