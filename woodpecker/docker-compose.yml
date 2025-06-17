@@ -1,0 +1,33 @@
+services:
+  woodpecker-server:
+    image: woodpeckerci/woodpecker-server:v3.7.0
+    container_name: woodpecker-server
+    environment:
+      - WOODPECKER_OPEN=${WOODPECKER_OPEN}
+      - WOODPECKER_HOST=${WOODPECKER_HOST}
+      - WOODPECKER_FORGEJO=${WOODPECKER_FORGEJO}
+      - WOODPECKER_FORGEJO_URL=${WOODPECKER_FORGEJO_URL}
+      - WOODPECKER_FORGEJO_CLIENT={WOODPECKER_FORGEJO_CLIENT}
+      - WOODPECKER_FORGEJO_SECRET=${WOODPECKER_FORGEJO_SECRET}
+      - WOODPECKER_AGENT_SECRET=${WOODPECKER_AGENT_SECRET}
+      - WOODPECKER_PLUGINS_PRIVILEGED=${WOODPECKER_PLUGINS_PRIVILEGED}
+    volumes:
+      - ${APPDATA_PATH}/woodpecker/server:/var/lib/woodpecker/
+    ports:
+      - ${SERVER_PORT}:8000
+
+  woodpecker-agent:
+    image: woodpeckerci/woodpecker-agent:v3.7.0
+    container_name: woodpecker-agent
+    depends_on:
+      woodpecker-server:
+        condition: service_healthy
+    command: agent
+    environment:
+      - WOODPECKER_SERVER=woodpecker-server:9000
+      - WOODPECKER_BACKEND_DOCKER_NETWORK=${WOODPECKER_BACKEND_DOCKER_NETWORK}
+      - WOODPECKER_AGENT_SECRET=${WOODPECKER_AGENT_SECRET}
+    volumes:
+      - ${APPDATA_PATH}/woodpecker/agent:/etc/woodpecker
+      - /var/run/docker.sock:/var/run/docker.sock
+    restart: unless-stopped
