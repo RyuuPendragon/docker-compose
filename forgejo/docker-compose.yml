@@ -1,47 +1,14 @@
-version: "3.8"
 services:
-  forgejo_db:
-    image: "mariadb:11.7.2"
-    container_name: "forgejo_db"
-    command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW --innodb-file-per-table=1 --skip-innodb-read-only-compressed
-    environment:
-      - "TZ=${TZ}"
-      - "MYSQL_DATABASE=${MYSQL_DATABASE}"
-      - "MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}"
-      - "MYSQL_USER=${MYSQL_USER}"
-      - "MYSQL_PASSWORD=${MYSQL_PASSWORD}"
-    healthcheck:
-      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
-      start_period: 10s
-      interval: 10s
-      timeout: 5s
-      retries: 3
-    volumes:
-      - "${APPDATA_PATH}/forgejo/db:/var/lib/mysql"
-    ports:
-      - "${DB_PORT}:3306"
-    restart: "unless-stopped"
-
-  forgejo_server:
+  forgejo:
     image: "codeberg.org/forgejo/forgejo:11.0.1-rootless"
-    container_name: "forgejo_server"
-    depends_on:
-      forgejo_db:
-        condition: service_healthy
-    environment:
-      - "USER_UID=${PUID}"
-      - "USER_GID=${PGID}"
-      - "FORGEJO__database__DB_TYPE=mysql"
-      - "FORGEJO__database__HOST=forgejo_db"
-      - "FORGEJO__database__NAME=${MYSQL_DATABASE}"
-      - "FORGEJO__database__USER=${MYSQL_USER}"
-      - "FORGEJO__database__PASSWD=${MYSQL_PASSWORD}"
+    container_name: "forgejo"
+    user: "${PUID}:${PGID}"
     volumes:
-      - "${APPDATA_PATH}/forgejo/data:/data"
-      - "${APPDATA_PATH}/forgejo/etc_gitea:/etc/gitea"
-      - "${APPDATA_PATH}/forgejo/var_lib_gitea:/var/lib/gitea"
+      - "${APPDATA_PATH}/forgejo/data:/var/lib/gitea"
+      - "${APPDATA_PATH}/forgejo/conf:/etc/gitea"
       - "/etc/timezone:/etc/timezone:ro"
       - "/etc/localtime:/etc/localtime:ro"
     ports:
       - "${SERVER_PORT}:3000"
+      - '${SSH_PORT}:2222'
     restart: "unless-stopped"
